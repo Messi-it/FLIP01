@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=latex 2019.9.27)  12 JAN 2020 18:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/W32TeX) (preloaded format=latex 2019.9.27)  19 JAN 2020 14:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1582,10 +1582,10 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 363.
 Here is how much of TeX's memory you used:
  33710 strings out of 492624
  617497 string characters out of 6128588
- 749620 words of memory out of 5000000
+ 749610 words of memory out of 5000000
  37137 multiletter control sequences out of 15000+600000
  560366 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  49i,9n,70p,2373b,876s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on tuliplab-P00.dvi (17 pages, 196888 bytes).
+Output written on tuliplab-P00.dvi (17 pages, 196900 bytes).
