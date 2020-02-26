@@ -1,0 +1,314 @@
+%=================================================================
+\section{Introduction}\label{sec-intro}
+
+
+%Test citation~\cite{BL12J01}. 
+%\begin{JournalOnly}
+%and~\citep{BJL11J01} or~\citet{BJL11J01}.
+%\end{JournalOnly}
+
+%This is for~\cref{tbl:overall-experiments}, 
+%\todo[fancyline]{Testing.}
+%and this is for~\cref{sec-conclusions}.
+%\todo[noline]{A note with no line back to the text.}%
+%\gangli{This is comment from Gang.}
+%\qwu{Response from QW}
+
+%Number:
+%\num{123}.
+%\numlist{10;30;50;70},
+%\numrange{10}{30},
+%\SIlist{10;30;45}{\metre},
+%and
+%\SI{10}{\percent}
+
+%\missingfigure[figcolor=white]{Testing figcolor}
+\subsection{Problem Statement}
+\
+
+Some of our strongest geographic and cultural associations are tied to a region's local foods. 
+This playground competitions asks you to predict the category of a dish's cuisine given a list of its
+ingredients. This is a natural language processing problem, so we need to use related methods to deal with it.
+\subsection{Data List}
+\
+The data provided in this topic are country name, ingredients, ID. These three attributes have a country corresponding to each ingredients.
+ Finally, it is required to establish a prediction model to which country the ingredients belongs.
+\begin{description}
+  \item [cuisine] - The country of every ingredients.
+  \item [ingredients] - Contains the ingredients needed for this dish.
+  \item [ID] - Item ID.
+\end{description}
+
+\subsection{Problem Analysis}
+\
+
+This problem is a text multi-classification problem in a typical natural language processing problem.
+First, the text data is cleaned. Second, the words in the text are converted into word vectors, 
+which can then be processed by the computer. Finally put it into the classification model for classification.
+
+\section{Exploratory Data Analysis} \label{sec-data_exploration}
+
+\subsection{Data Information}
+\
+
+From the table 1, we can clearly understand the situation of the 
+train data set. and from the table 2, we can clearly understand the situation of the 
+test data set. All we have to do is predict the cuisine of the ingredients in the test set.
+
+\begin{table}[htbp]  \centering
+	\caption{The head of the train data}
+	\label{tbl:data information}
+	\begin{tabular}{ccccccc}
+		\hline
+		% after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+		& cuisine & id & ingredients\\
+        \hline
+        0 & greek       & 10259 & [romaine lettuce, black olives, grape tomatoes... \\
+        1 & southern_us & 25693 & [plain flour, ground pepper, salt, tomatoes, g... \\
+        2 & filipino    & 20130 & [eggs, pepper, salt, mayonaise, cooking oil, g... \\
+        3 & indian      & 22213 & [water, vegetable oil, wheat, salt] \\
+        4 & indian      & 13162 & [black pepper, shallots, cornflour, cayenne pe... \\
+        \hline 
+		%\bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{table}[htbp]  \centering
+    \caption{The head of the test data}
+    \label{tbl:data information}
+    \begin{tabular}{ccccccc}
+      % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+      & id & ingredients\\
+      \hline
+      0  & 18009 & [baking powder, eggs, all-purpose flour, raisi... \\
+      1  & 28583 & [sugar, egg yolks, corn starch, cream of tarta... \\
+      2  & 41580 & [sausage links, fennel bulb, fronds, olive oil... \\
+      3  & 29752 & [meat cuts, file powder, smoked sausage, okra,... \\
+      4  & 35687 & [ground black pepper, salt, sausage casings, l... \\
+      \hline 
+      %\bottomrule
+    \end{tabular}
+  \end{table}
+
+\subsection{Text Preprocessing}
+\
+
+The text data needs to be pre-processed before the model prediction.
+The text we got contains a lot of information we don't need. Therefore,
+we need some algorithms and tools to pre-process the text. Then you can go to the next step.
+
+\begin{itemize}
+	\item stopwords
+	\item regularization
+	\item convert to lowercase letters
+  \end{itemize}
+\subsubsection{stopwords}
+\
+
+In this text, there are many words that we don't need. They have no practical meaning. 
+They are just words that complete the grammatical structure when people communicate. 
+Therefore, these words can be removed by stop words, which makes the data required by 
+our model simpler. These text words are also prevented from affecting model predictions.
+
+\subsubsection{regularization}
+\
+
+There are some punctuation marks in the text, or smiley faces, crying faces, and the like, 
+which will also prevent our prediction of the text. Therefore, a regularization method is 
+introduced to process the string and limit the characters of the text to the range we need.
+
+\subsubsection{convert to lowercase letters}
+\
+
+In English text, there are lowercase and uppercase. In our predictive models, we usually convert 
+uppercase to lowercase. This makes the entire text lowercase. This can reduce the complexity of the text, 
+so that you can get a better text to be processed.
+
+\subsection{visualization}
+\ 
+
+Draw word cloud for text by using word cloud technology. In this way, we can know which words 
+appear more frequently in the text, which may provide some reference for our future model selection and model processing.
+
+\begin{figure}[ht]%插入图片
+	\centering%用于居中
+	\includegraphics[scale=1]{E:/tulip-flip/flip01/photo/01.eps}
+	\caption{Displaying the words in text}%图片标题
+\end{figure} 
+
+\begin{figure}[ht]%插入图片
+	\centering%用于居中
+	\includegraphics[scale=0.9]{E:/tulip-flip/flip01/photo/05.eps}
+	\caption{Displaying the words in text}%图片标题
+\end{figure}
+\vspace{2cm}
+From Figure 1 and Figure 2, we can see that Mexican is the most frequently occurring in Cuisine.
+And salt onions and other words are the most frequent words in the recipe.
+
+\section{Methods}
+
+There are many machine learning methods for text classification. We have selected the following five methods:
+\begin{itemize}
+	\item  Logistic Regression
+	\item  KNN
+	\item  Random forest
+	\item  SVM
+	\item  CNN
+  \end{itemize}
+\subsection{convert text to word vectors}
+\ 
+
+By using word2vec, the words in the text are converted into word vectors, 
+and then the word vectors are converted into sentence vectors. Make each label correspond 
+to a sentence vector. In this way, labels and sentence vectors can be put into the model 
+for classification.Use functions to convert text labels into numeric labels, which can eliminate 
+the inconvenience caused by text labels.
+
+
+\subsection{ model}
+\
+
+Use the following five models to classify the preprocessed data
+
+\subsubsection{model predict}
+\
+
+Text classification was performed using
+ five methods of logistic regression, random forest, KNN, 
+ support vector machine, and convolutional neural network.
+ \
+
+ Among them, in KNN, random forest, support vector machine, a grid search method is used to adjust the parameters.
+ Among them, the kernel function of the support vector machine is LinearSVC.
+ 
+ \subsubsection{CNN}
+ \
+
+ In the convolutional neural network model, 
+ it is constructed as an embading layer, two convolutional base layers, and an output layer. It uses dropout technology. 
+ and batch normallization technology.
+\
+ 
+\begin{figure}[ht]%插入图片
+	\centering%用于居中
+	\includegraphics[scale=1]{E:/tulip-flip/flip01/photo/03.eps}
+	\caption{Displaying the relationship between the loss and epoch}%图片标题
+\end{figure} 
+
+\begin{figure}[ht]%插入图片
+	\centering%用于居中
+	\includegraphics[scale=1]{E:/tulip-flip/flip01/photo/04.eps}
+	\caption{Displaying the relationship between the accuracy and epoch}%图片标题
+\end{figure}
+ \
+
+ It can be seen that the model gradually started to stabilize when iterating about 10 times.
+
+ \subsubsection{model score}
+ \
+
+ The accuracy of each model is obtained through model training. Show in the table below.
+ \
+ 
+ \begin{table}[htbp]  \centering
+    \caption{The score of models}
+    \label{tbl:data information}
+    \begin{tabular}{ccccccc}
+      \hline
+      % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+        & model          & score \\
+      \hline
+      1 &  Logistic Regression  & 0.729  \\
+      2 &  KNN                  & 0.740  \\
+      3 &  Random forest        & 0.739  \\
+      4 &  SVM                  & 0.736  \\
+      5 &  CNN                  & 0.753  \\
+      \hline 
+      %\bottomrule
+    \end{tabular}
+  \end{table}
+ %\begin{ConferenceOnly}
+%We have \SI{10}{\hertz},
+%\si{\kilogram\metre\per\second},
+%the range: \SIrange{10}{100}{\hertz}.
+%$\nicefrac[]{1}{2}$.
+
+%\missingfigure{Make a sketch of the structure of a trebuchet.}
+
+%\end{ConferenceOnly}
+
+
+%For~\cref{eq:test},
+%as shown below:
+
+%\begin{equation}\label{eq:test}
+%a = b \times \sqrt{ab}
+%\end{equation}
+
+%\blindmathpaper
+
+\section{Experiment and Analysis}
+\
+
+This time the accuracy is slightly lower. There may be two reasons. The first is to use the average method 
+when converting word vectors into sentence vectors. The other is that word vectors are trained with their own words,
+ and the distance between word vectors is relatively close. So there is no distinction.
+
+\section{Conclusion}
+ 1.Using the Word2vec to help us process the textdata.If the text data is Chinese, we can use jieba for word segmentation.
+ \
+ 
+ 2.There are many ways to deal with text classification in machine learning .we can select suitable ways on combination with the problem
+ \
+ 
+ 3.In this problem, i use the mean of each words vector to caculate the sentence vector. Maybe this is the question why accuracy is lower than my espect.  
+%\section{Preliminaries} \label{sec-preliminaries}
+
+%\blindtext
+
+%\gliMarker  %TODO: GLi Here
+
+
+%\section{Method} \label{sec-method}
+
+%\blindtext
+%\blindlist{itemize}[3]
+%\blinditemize
+%\blindenumerate
+
+%\blindmathtrue
+%\blindmathfalse
+%\blinddescription
+
+%\qwuMarker %TODO: QWu Here
+
+%\section{Experiment and Analysis} \label{sec-experiment}
+
+
+%\begin{table}  \centering
+  %\caption{Precision Comparison on Event Detection Methods}
+  %\label{tbl:overall-experiments}
+  %\begin{tabular}{cccc}
+%\toprule
+    % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
+    %& OR Event Detection & AC Event Detection & TC Event Detection \\
+%\midrule
+    %precision & 0.83 & 0.69 & 0.46 \\
+    %recall & 0.68 & 0.48 & 0.36 \\
+    %F-score & 0.747 & 0.57 & 0.4 \\
+%\bottomrule
+%\end{tabular}
+%\end{table}
+
+
+%\section{Conclusions} \label{sec-conclusions}
+
+%\blindtext
+
+%\section*{Acknowledgment}
+
+%\lipsum[1]
+
+
+%The authors would like to thank \ldots
+
